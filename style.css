@@ -1,0 +1,128 @@
+/* ===== Base / Background ===== */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(-45deg, #100018, #1e0030, #2a0050, #100018) !important;
+  background-size: 400% 400% !important;
+  animation: gradientFlow 20s ease infinite !important;
+  color: #e8e8ff !important;
+  overflow-x: hidden;
+}
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== Centering helpers ===== */
+.container { max-width: 900px; }
+
+/* ===== Day Clock Card ===== */
+.day-clock-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.day-clock-card {
+  background: rgba(30, 41, 59, 0.55);
+  backdrop-filter: blur(15px) saturate(180%);
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  border-radius: 20px;
+  padding: 1.25rem 2rem;
+  text-align: center;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
+  transition: all 0.3s ease;
+  max-width: 360px;
+  width: 100%;
+}
+.day-clock-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(139, 92, 246, 0.35);
+  border-color: rgba(139, 92, 246, 0.4);
+}
+.day-clock-card h2 {
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  background: linear-gradient(90deg, #a78bfa, #4f46e5, #60a5fa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% 200%;
+  animation: textShift 6s ease infinite;
+}
+.day-clock-card p {
+  color: #c3c1ff;
+  font-size: 0.95rem;
+  opacity: 0.95;
+}
+@keyframes textShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* ===== Progress Bar Section ===== */
+#progress-section { font-family: 'Inter', sans-serif; margin-top: 0.5rem; }
+#progress-bar-container {
+  background: rgba(30, 41, 59, 0.55);
+  border-radius: 9999px;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.35), inset 0 0 12px rgba(255,255,255,0.06);
+  overflow: hidden;
+  position: relative;
+  height: 38px;
+}
+#progress-bar {
+  height: 100%;
+  border-radius: 9999px;
+  transition: width 0.4s ease-in-out;
+  background: linear-gradient(90deg, #8b5cf6, #6366f1, #22d3ee, #34d399);
+  background-size: 200% 100%;
+}
+#progress-bar-container::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  box-shadow: 0 0 15px rgba(99, 102, 241, 0.18);
+  animation: barGlow 3s ease-in-out infinite alternate;
+}
+@keyframes barGlow {
+  from { box-shadow: 0 0 8px rgba(139, 92, 246, 0.12); }
+  to   { box-shadow: 0 0 20px rgba(52, 211, 153, 0.18); }
+}
+#progress-text { position: absolute; left: 0; right: 0; text-align: center; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-weight: 600; color: white; }
+
+/* ===== Widget Cards ===== */
+.widget-card {
+  position: relative;
+  background: rgba(30, 41, 59, 0.55);
+  backdrop-filter: blur(10px) saturate(140%);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border: 1px solid rgba(139, 92, 246, 0.12);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+  transition: all 0.25s ease-in-out;
+}
+.widget-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(139, 92, 246, 0.22);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.22);
+}
+.widget-title { color: #cfc7ff; font-size: 0.95rem; margin-bottom: 6px; font-weight: 600; }
+.widget-number { font-size: 1.6rem; font-weight: 700; color: #fff; }
+
+/* ===== Scrollbar (cosmetic) ===== */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-thumb { background: linear-gradient(to bottom, #8b5cf6, #4f46e5); border-radius: 3px; }
+::-webkit-scrollbar-track { background: rgba(11,15,37,0.6); }
+
+/* ===== Responsive tweaks ===== */
+@media (max-width: 640px) {
+  .container { padding-top: 8vh; }
+  #progress-bar-container { height: 28px; }
+}
