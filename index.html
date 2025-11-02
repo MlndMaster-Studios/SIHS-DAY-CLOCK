@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Semester Status</title>
+  <link rel="icon" href="tab-icon.png" type="image/png">
+  <!-- Tailwind CDN (keeps your utility classes intact) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="component.css">
+</head>
+<body class="text-gray-200 min-h-screen relative">
+  <!-- Particle canvas (background) -->
+  <canvas id="bgCanvas" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
+
+  <div class="container mx-auto px-4 py-20 max-w-2xl relative z-10 flex flex-col items-center">
+    <!-- Day Clock Card -->
+    <div class="day-clock-wrapper w-full mb-8">
+      <div class="day-clock-card mx-auto">
+        <h2 id="school-day">Loading Day...</h2>
+        <p id="dateText"></p>
+      </div>
+    </div>
+
+    <!-- Progress Section -->
+    <div id="progress-section" class="w-full">
+      <div id="progress-bar-container" class="relative w-full h-6 rounded-full overflow-hidden">
+        <div id="progress-bar" class="h-full rounded-full transition-all duration-700 ease-in-out"></div>
+        <span id="progress-text" class="absolute inset-0 flex items-center justify-center text-sm font-medium text-white"></span>
+      </div>
+
+      <div id="progress-widgets" class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div class="widget-card">
+          <div class="widget-title">Estimated School Days:</div>
+          <div id="weekdays-left" class="widget-number">--</div>
+        </div>
+        <div class="widget-card">
+          <div class="widget-title">Total Days:</div>
+          <div id="total-days" class="widget-number">--</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="component.js" defer></script>
+</body>
+</html>
