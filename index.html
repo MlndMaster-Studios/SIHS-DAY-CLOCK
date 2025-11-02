@@ -1,47 +1,50 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Semester Status</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Saint Ignatius Semester Status</title>
   <link rel="icon" href="tab-icon.png" type="image/png">
-  <!-- Tailwind CDN (keeps your utility classes intact) -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="component.css">
+  <link rel="stylesheet" href="component.css" />
+  <script src="component.js" defer></script>
 </head>
-<body class="text-gray-200 min-h-screen relative">
-  <!-- Particle canvas (background) -->
-  <canvas id="bgCanvas" class="fixed top-0 left-0 w-full h-full -z-10"></canvas>
 
-  <div class="container mx-auto px-4 py-20 max-w-2xl relative z-10 flex flex-col items-center">
-    <!-- Day Clock Card -->
-    <div class="day-clock-wrapper w-full mb-8">
-      <div class="day-clock-card mx-auto">
-        <h2 id="school-day">Loading Day...</h2>
-        <p id="dateText"></p>
-      </div>
+<body>
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <img src="logo-header.png" alt="Saint Ignatius Logo" class="school-logo" />
+      <h1 class="header-title">Saint Ignatius Semester Status</h1>
     </div>
+  </header>
 
-    <!-- Progress Section -->
-    <div id="progress-section" class="w-full">
-      <div id="progress-bar-container" class="relative w-full h-6 rounded-full overflow-hidden">
-        <div id="progress-bar" class="h-full rounded-full transition-all duration-700 ease-in-out"></div>
-        <span id="progress-text" class="absolute inset-0 flex items-center justify-center text-sm font-medium text-white"></span>
+  <!-- Canvas Background -->
+  <canvas id="bgCanvas" class="background"></canvas>
+
+  <!-- Main Content -->
+  <main class="content">
+    <section class="card day-clock-card">
+      <h2 id="school-day">Loading Day...</h2>
+      <p id="dateText"></p>
+    </section>
+
+    <section id="progress-section" class="card progress-container">
+      <div id="progress-bar-container">
+        <div id="progress-bar"></div>
+        <span id="progress-text">--%</span>
       </div>
 
-      <div id="progress-widgets" class="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div id="progress-widgets" class="widgets">
         <div class="widget-card">
-          <div class="widget-title">Estimated School Days:</div>
+          <div class="widget-title">Estimated School Days</div>
           <div id="weekdays-left" class="widget-number">--</div>
         </div>
         <div class="widget-card">
-          <div class="widget-title">Total Days:</div>
+          <div class="widget-title">Total Days</div>
           <div id="total-days" class="widget-number">--</div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <script src="component.js" defer></script>
+    </section>
+  </main>
 </body>
 </html>
