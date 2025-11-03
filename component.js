@@ -108,7 +108,7 @@ setInterval(updateProgress, 3600000);
 
 // ===== Week View =====
 function updateWeekView(){
-  const weekSection = document.getElementById("WEEK-day");
+  const weekSection = document.getElementById("week-section");
   if(!weekSection) return;
 
   const today = getClevelandDate();
@@ -125,7 +125,7 @@ function updateWeekView(){
   monday.setHours(0,0,0,0);
 
   const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
-  const cards = weekSection.querySelectorAll(".schedule-card");
+  const cards = weekSection.querySelectorAll(".week-day");
 
   weekdays.forEach((day,i)=>{
     const date = new Date(monday);
