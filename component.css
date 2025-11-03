@@ -196,27 +196,28 @@ body {
 
 /* ===== Responsive ===== */
 @media (max-width: 640px) {
+  .site-header {
+    padding: 0.75rem 0.5rem;
+  }
+
   .header-inner {
     flex-direction: column;
-    text-align: center;
+    justify-content: center;
+    align-items: center;
+    position: relative;
   }
+
   .school-logo {
     position: static;
-    transform: none;
     margin-bottom: 0.5rem;
+    height: 50px; /* keeps it visible but smaller */
   }
-  .widgets {
-    grid-template-columns: 1fr;
+
+  .header-title {
+    font-size: 1.4rem;
+    text-align: center;
+    margin: 0;
   }
-  .week-day {
-    flex: 1 1 100%;
-  }
-}
-.school-logo {
-  position: absolute;
-  left: clamp(0.5rem, 1vw, 1rem); /* scales slightly with screen size */
-  height: 60px;
-  width: auto;
 }
 
 /* ===== Footer ===== */
