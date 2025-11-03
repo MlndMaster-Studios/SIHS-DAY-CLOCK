@@ -3,70 +3,68 @@ const clockDisplay = document.getElementById("school-day");
 const dateText = document.getElementById("dateText");
 const scheduleOrder = ["A","F","D","B","G","E","C"];
 
+// Optional overrides (holidays, pauses, etc.)
 const scheduleOverrides = {
   "2025-10-15": "PAUSE",
   "2025-10-16": "PAUSE",
   "2025-10-17": "PAUSE"
 };
 
+// First known school day + starting day letter
 const startDate = new Date("2025-10-09T00:00:00");
 
+function getClevelandDate() {
+  return new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
+}
+
 function calculateDay() {
-  // Lock to Cleveland time zone
-  let today = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
-  today.setHours(0,0,0,0);
+  let today = getClevelandDate();
+  today.setHours(0, 0, 0, 0);
   
   const dayMS = 1000 * 60 * 60 * 24;
   let current = new Date(startDate);
-  let index = scheduleOrder.indexOf("G");
+  let index = scheduleOrder.indexOf("G"); // starting day letter
   
   while (current < today) {
-    const yyyy_mm_dd = current.toISOString().slice(0,10);
+    const yyyy_mm_dd = current.toISOString().slice(0, 10);
     const dayOfWeek = current.getDay();
     
     if (dayOfWeek !== 0 && dayOfWeek !== 6) {
       if (scheduleOverrides[yyyy_mm_dd] === "PAUSE") {
-        // skip, don’t advance
+        // Skip pause days
       } else if (scheduleOverrides[yyyy_mm_dd]) {
-        // force specific day letter
         index = scheduleOrder.indexOf(scheduleOverrides[yyyy_mm_dd]);
       } else {
-        // normal advancement
         index = (index + 1) % scheduleOrder.length;
       }
     }
     current = new Date(current.getTime() + dayMS);
   }
 
-  // Handle today’s override
-  const todayStr = today.toISOString().slice(0,10);
+  const todayStr = today.toISOString().slice(0, 10);
   const todayOverride = scheduleOverrides[todayStr];
   if (todayOverride === "PAUSE") return "No Classes 🎉";
   if (todayOverride && todayOverride !== "PAUSE") return todayOverride + " Day";
-
   return scheduleOrder[index] + " Day";
 }
 
 function updateDayDisplay() {
   if (clockDisplay) clockDisplay.textContent = calculateDay();
 
-  // Update the date below the header
-  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
+  const now = getClevelandDate();
   if (dateText) {
     dateText.textContent = now.toLocaleDateString(undefined, { 
-      weekday: 'long', 
-      month: 'short', 
-      day: 'numeric', 
-      year: 'numeric' 
+      weekday: 'long',
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric'
     });
   }
 }
 
 updateDayDisplay();
-
-// Refresh shortly after midnight (1 minute after)
 setInterval(() => {
-  const now = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
+  const now = getClevelandDate();
   if (now.getHours() === 0 && now.getMinutes() === 1) updateDayDisplay();
 }, 60 * 1000);
 
@@ -91,7 +89,7 @@ function countWeekdays(start, end) {
 }
 
 function updateProgress() {
-  const today = new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
+  const today = getClevelandDate();
   const totalWeekdays = countWeekdays(schoolStart, schoolEnd);
   const elapsedWeekdays = countWeekdays(schoolStart, today);
   const remainingWeekdays = Math.max(totalWeekdays - elapsedWeekdays, 0);
