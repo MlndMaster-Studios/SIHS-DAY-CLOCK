@@ -30,23 +30,26 @@ function calculateDayForDate(targetDate) {
   while (current < targetDate) {
     const yyyy_mm_dd = current.toISOString().slice(0,10);
     const dayOfWeek = current.getDay();
-    const override = scheduleOverrides[yyyy_mm_dd];
 
-    if(dayOfWeek !== 0 && dayOfWeek !== 6){ // skip weekends
-      if(override !== "PAUSE" && override !== "ALL"){
-        // advance letter sequence on normal or FLEX days
-        index = (index + 1) % scheduleOrder.length;
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Skip weekends
+      const override = scheduleOverrides[yyyy_mm_dd];
+
+      if (override === "PAUSE" || override === "ALL") {
+        // Do not advance letter sequence
+      } else {
+        index = (index + 1) % scheduleOrder.length; // Advance normally
       }
     }
+
     current = new Date(current.getTime() + dayMS);
   }
 
   const targetStr = targetDate.toISOString().slice(0,10);
   const todayOverride = scheduleOverrides[targetStr];
 
-  if(todayOverride === "PAUSE") return "No Classes 🎉";
-  if(todayOverride === "ALL") return "All Period Day";
-  if(todayOverride === "FLEX") return scheduleOrder[index] + " Day Flex";
+  if (todayOverride === "PAUSE") return "No Classes 🎉";
+  if (todayOverride === "ALL") return "All Period Day";
+  if (todayOverride === "FLEX") return scheduleOrder[index] + " Day Flex";
 
   return scheduleOrder[index] + " Day";
 }
@@ -73,7 +76,6 @@ setInterval(() => {
   const now = getClevelandDate();
   if(now.getHours() === 0 && now.getMinutes() === 1) updateDayDisplay();
 }, 60*1000);
-
 
 // ===== Progress Bar =====
 const progressBar = document.getElementById("progress-bar");
@@ -110,7 +112,6 @@ function updateProgress() {
 updateProgress();
 setInterval(updateProgress, 3600000);
 
-
 // ===== Week View =====
 function updateWeekView(){
   const weekSection = document.getElementById("week-section");
@@ -123,13 +124,13 @@ function updateWeekView(){
   if(today.getDay() === 6) monday.setDate(today.getDate() + 2); // Sat → Mon
   if(today.getDay() === 0) monday.setDate(today.getDate() + 1); // Sun → Mon
 
-  // Normal week calculation Mon-Fri
+  // Normal week calculation for Mon-Fri
   if(today.getDay() !== 0 && today.getDay() !== 6){
     monday.setDate(today.getDate() - ((today.getDay() + 6) % 7));
   }
   monday.setHours(0,0,0,0);
 
-  const weekdays = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+  const weekdays = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
   const cards = weekSection.querySelectorAll(".week-day");
 
   weekdays.forEach((day,i)=>{
@@ -153,8 +154,14 @@ function updateWeekView(){
 }
 
 updateWeekView();
-setInterval(updateWeekView, 60*60*1000); // refresh hourly
-
+setInterval(() => {
+  // Clear old day-type text before updating to prevent leftovers
+  const weekSection = document.getElementById("week-section");
+  if(weekSection){
+    weekSection.querySelectorAll(".day-type").forEach(el => el.remove());
+  }
+  updateWeekView();
+}, 60*60*1000); // refresh hourly
 
 // ===== Subtle Blue-Gold Particles =====
 const canvas = document.getElementById("bgCanvas");
