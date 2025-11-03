@@ -37,21 +37,20 @@ body {
 
 .header-inner {
   width: 100%;
-  position: relative;
+  max-width: 1100px;
   display: flex;
-  justify-content: center;
+  justify-content: center; /* centers the text */
   align-items: center;
+  position: relative;
 }
 
 .school-logo {
   position: absolute;
-  left: 0;
+  left: 12px;          /* small offset from edge */
   top: 50%;
   transform: translateY(-50%);
   height: 60px;
   width: auto;
-  margin: 0;
-  padding: 0;
 }
 
 .header-title {
@@ -236,7 +235,7 @@ body {
   }
 
   .school-logo {
-    position: static;
+    position: relative;   /* mobile: stack normally */
     margin-bottom: 0.5rem;
     height: 50px;
   }
