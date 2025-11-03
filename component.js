@@ -77,7 +77,7 @@ const weekdaysLeftElem = document.getElementById("weekdays-left");
 const totalDaysElem = document.getElementById("total-days");
 
 const schoolStart = new Date("2025-08-20T00:00:00");
-const schoolEnd = new Date("2026-05-21T00:00:00");
+const schoolEnd = new Date("2025-11-04T00:00:00");
 
 function countWeekdays(start, end) {
   let c = 0, cur = new Date(start);
