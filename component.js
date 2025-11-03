@@ -21,6 +21,7 @@ const scheduleOverrides = {
   "2025-11-28": "PAUSE",
   "2025-12-01": "ALL",
   "2025-12-08": "PAUSE",
+  "2025-12-15": "All"
 };
 
 const startDate = new Date("2025-10-09T00:00:00");
