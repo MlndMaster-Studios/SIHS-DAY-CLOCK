@@ -12,7 +12,15 @@ const scheduleOverrides = {
   "2025-10-15": "PAUSE",
   "2025-10-16": "PAUSE",
   "2025-10-17": "PAUSE",
-  "2025-11-05": "PAUSE"
+  "2025-11-03": "FLEX",
+  "2025-11-04": "ALL",
+  "2025-11-26": "PAUSE",
+  "2025-11-27": "PAUSE",
+  "2025-11-28": "PAUSE",
+  "2025-11-28": "PAUSE",
+  "2025-11-28": "PAUSE",
+  "2025-12-01": "ALL",
+  "2025-12-08": "PAUSE",
 };
 
 const startDate = new Date("2025-10-09T00:00:00");
@@ -22,16 +30,20 @@ function calculateDayForDate(targetDate) {
   let current = new Date(startDate);
   let index = scheduleOrder.indexOf("G");
 
-  while(current < targetDate){
+  while (current < targetDate) {
     const yyyy_mm_dd = current.toISOString().slice(0,10);
     const dayOfWeek = current.getDay();
 
-    if(dayOfWeek !== 0 && dayOfWeek !== 6){
-      if(scheduleOverrides[yyyy_mm_dd] === "PAUSE") {
-        // do not advance
-      } else if(scheduleOverrides[yyyy_mm_dd]) {
-        index = scheduleOrder.indexOf(scheduleOverrides[yyyy_mm_dd]);
+    if (dayOfWeek !== 0 && dayOfWeek !== 6) { // Skip weekends
+      const override = scheduleOverrides[yyyy_mm_dd];
+      
+      if (override === "PAUSE" || override === "ALL") {
+        // Do not advance letter sequence
+      } else if (override === "FLEX") {
+        // Advance sequence normally
+        index = (index + 1) % scheduleOrder.length;
       } else {
+        // Normal advancement
         index = (index + 1) % scheduleOrder.length;
       }
     }
@@ -40,9 +52,11 @@ function calculateDayForDate(targetDate) {
   }
 
   const targetStr = targetDate.toISOString().slice(0,10);
-  const override = scheduleOverrides[targetStr];
-  if(override === "PAUSE") return "No Classes 🎉";
-  if(override && override !== "PAUSE") return override + " Day";
+  const todayOverride = scheduleOverrides[targetStr];
+
+  if (todayOverride === "PAUSE") return "No Classes 🎉";
+  if (todayOverride === "ALL") return "All Period Day";
+  if (todayOverride === "FLEX") return scheduleOrder[index] + " Day Flex";
 
   return scheduleOrder[index] + " Day";
 }
