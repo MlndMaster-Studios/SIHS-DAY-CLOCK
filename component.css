@@ -212,3 +212,9 @@ body {
     flex: 1 1 100%;
   }
 }
+.school-logo {
+  position: absolute;
+  left: clamp(0.5rem, 1vw, 1rem); /* scales slightly with screen size */
+  height: 60px;
+  width: auto;
+}
