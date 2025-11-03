@@ -42,13 +42,6 @@ body {
   width: auto;
   margin-right: 1rem;
 }
-.header-title {
-  font-family: var(--font-header);
-  font-weight: 600;
-  font-size: 1.75rem;
-  letter-spacing: 0.5px;
-  text-transform: uppercase;
-}
 
 /* ===== Content ===== */
 .content {
@@ -80,8 +73,6 @@ body {
   color: var(--brand-blue); /* solid blue */
   font-size: 2rem;
   font-weight: 700;
-  -webkit-background-clip: unset;
-  -webkit-text-fill-color: unset;
 }
 .day-clock-card p {
   color: var(--brand-dark);
