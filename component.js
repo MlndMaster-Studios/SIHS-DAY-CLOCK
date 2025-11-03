@@ -3,36 +3,31 @@ const clockDisplay = document.getElementById("school-day");
 const dateText = document.getElementById("dateText");
 const scheduleOrder = ["A","F","D","B","G","E","C"];
 
-// Optional overrides (holidays, pauses, etc.)
 const scheduleOverrides = {
   "2025-10-15": "PAUSE",
   "2025-10-16": "PAUSE",
   "2025-10-17": "PAUSE"
 };
 
-// First known school day + starting day letter
 const startDate = new Date("2025-10-09T00:00:00");
 
 function getClevelandDate() {
   return new Date(new Date().toLocaleString("en-US", { timeZone: "America/New_York" }));
 }
 
-function calculateDay() {
-  let today = getClevelandDate();
-  today.setHours(0, 0, 0, 0);
-  
+function calculateDay(today = getClevelandDate()) {
+  today.setHours(0,0,0,0);
   const dayMS = 1000 * 60 * 60 * 24;
   let current = new Date(startDate);
-  let index = scheduleOrder.indexOf("G"); // starting day letter
-  
-  while (current < today) {
-    const yyyy_mm_dd = current.toISOString().slice(0, 10);
+  let index = scheduleOrder.indexOf("G");
+
+  while(current < today) {
+    const yyyy_mm_dd = current.toISOString().slice(0,10);
     const dayOfWeek = current.getDay();
-    
-    if (dayOfWeek !== 0 && dayOfWeek !== 6) {
-      if (scheduleOverrides[yyyy_mm_dd] === "PAUSE") {
-        // Skip pause days
-      } else if (scheduleOverrides[yyyy_mm_dd]) {
+    if(dayOfWeek !== 0 && dayOfWeek !== 6){
+      if(scheduleOverrides[yyyy_mm_dd] === "PAUSE") {
+        // skip
+      } else if(scheduleOverrides[yyyy_mm_dd]) {
         index = scheduleOrder.indexOf(scheduleOverrides[yyyy_mm_dd]);
       } else {
         index = (index + 1) % scheduleOrder.length;
@@ -41,23 +36,23 @@ function calculateDay() {
     current = new Date(current.getTime() + dayMS);
   }
 
-  const todayStr = today.toISOString().slice(0, 10);
+  const todayStr = today.toISOString().slice(0,10);
   const todayOverride = scheduleOverrides[todayStr];
-  if (todayOverride === "PAUSE") return "No Classes 🎉";
-  if (todayOverride && todayOverride !== "PAUSE") return todayOverride + " Day";
+  if(todayOverride === "PAUSE") return "No Classes 🎉";
+  if(todayOverride && todayOverride !== "PAUSE") return todayOverride + " Day";
   return scheduleOrder[index] + " Day";
 }
 
 function updateDayDisplay() {
-  if (clockDisplay) clockDisplay.textContent = calculateDay();
+  if(clockDisplay) clockDisplay.textContent = calculateDay();
 
   const now = getClevelandDate();
-  if (dateText) {
+  if(dateText) {
     dateText.textContent = now.toLocaleDateString(undefined, { 
-      weekday: 'long',
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
+      weekday: 'long', 
+      month: 'short', 
+      day: 'numeric', 
+      year: 'numeric' 
     });
   }
 }
@@ -65,9 +60,8 @@ function updateDayDisplay() {
 updateDayDisplay();
 setInterval(() => {
   const now = getClevelandDate();
-  if (now.getHours() === 0 && now.getMinutes() === 1) updateDayDisplay();
+  if(now.getHours() === 0 && now.getMinutes() === 1) updateDayDisplay();
 }, 60 * 1000);
-
 
 // ===== Progress Bar =====
 const progressBar = document.getElementById("progress-bar");
@@ -80,9 +74,9 @@ const schoolEnd = new Date("2026-05-21T00:00:00");
 
 function countWeekdays(start, end) {
   let c = 0, cur = new Date(start);
-  while (cur <= end) {
+  while(cur <= end){
     const d = cur.getDay();
-    if (d !== 0 && d !== 6) c++;
+    if(d !== 0 && d !== 6) c++;
     cur.setDate(cur.getDate() + 1);
   }
   return c;
@@ -104,7 +98,6 @@ function updateProgress() {
 updateProgress();
 setInterval(updateProgress, 3600000);
 
-
 // ===== Subtle Blue-Gold Particles =====
 const canvas = document.getElementById("bgCanvas");
 const ctx = canvas.getContext("2d");
@@ -125,34 +118,71 @@ class Particle {
     this.size = Math.random() * 1.5 + 0.5;
     this.vx = (Math.random() - 0.5) * 0.2;
     this.vy = (Math.random() - 0.5) * 0.2;
-    const hue = Math.random() < 0.5 ? 210 : 48; // blue or gold
+    const hue = Math.random() < 0.5 ? 210 : 48;
     const sat = 80 + Math.random() * 10;
     const light = 60 + Math.random() * 10;
     this.color = `hsl(${hue}, ${sat}%, ${light}%)`;
   }
-  update() {
-    this.x += this.vx;
-    this.y += this.vy;
-    if (this.x < 0) this.x = canvas.width;
-    if (this.x > canvas.width) this.x = 0;
-    if (this.y < 0) this.y = canvas.height;
-    if (this.y > canvas.height) this.y = 0;
+  update() { this.x += this.vx; this.y += this.vy;
+    if(this.x<0) this.x=canvas.width; if(this.x>canvas.width) this.x=0;
+    if(this.y<0) this.y=canvas.height; if(this.y>canvas.height) this.y=0;
   }
-  draw() {
-    ctx.beginPath();
-    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-    ctx.fillStyle = this.color;
-    ctx.globalAlpha = 0.2;
-    ctx.fill();
-    ctx.globalAlpha = 1;
-  }
+  draw() { ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2); ctx.fillStyle=this.color; ctx.globalAlpha=0.2; ctx.fill(); ctx.globalAlpha=1; }
 }
 
-for (let i = 0; i < particleCount; i++) particles.push(new Particle());
-
-function animateParticles() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  particles.forEach(p => { p.update(); p.draw(); });
-  requestAnimationFrame(animateParticles);
-}
+for(let i=0;i<particleCount;i++) particles.push(new Particle());
+function animateParticles() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(animateParticles); }
 animateParticles();
+
+// ===== Week View =====
+function calculateDayForDate(targetDate){
+  targetDate.setHours(0,0,0,0);
+  const dayMS = 1000 * 60 * 60 * 24;
+  let current = new Date(startDate);
+  let index = scheduleOrder.indexOf("G");
+
+  while(current < targetDate){
+    const yyyy_mm_dd = current.toISOString().slice(0,10);
+    const dayOfWeek = current.getDay();
+
+    if(dayOfWeek!==0 && dayOfWeek!==6){
+      if(scheduleOverrides[yyyy_mm_dd]==="PAUSE"){
+        // skip
+      } else if(scheduleOverrides[yyyy_mm_dd]){
+        index = scheduleOrder.indexOf(scheduleOverrides[yyyy_mm_dd]);
+      } else { index = (index+1)%scheduleOrder.length; }
+    }
+    current = new Date(current.getTime()+dayMS);
+  }
+
+  const todayStr = targetDate.toISOString().slice(0,10);
+  const todayOverride = scheduleOverrides[todayStr];
+  if(todayOverride==="PAUSE") return "No Classes 🎉";
+  if(todayOverride && todayOverride!=="PAUSE") return todayOverride+" Day";
+  return scheduleOrder[index]+" Day";
+}
+
+function updateWeekView(){
+  const weekSection = document.getElementById("week-section");
+  if(!weekSection) return;
+
+  const weekdays = ["Monday","Tuesday","Wednesday","Thursday","Friday"];
+  const weekDaysElems = weekSection.querySelectorAll(".week-day");
+
+  const today = getClevelandDate();
+  const dayNum = today.getDay();
+  const monday = new Date(today);
+  monday.setDate(today.getDate()-((dayNum+6)%7));
+  monday.setHours(0,0,0,0);
+
+  weekdays.forEach((day,i)=>{
+    const date = new Date(monday);
+    date.setDate(monday.getDate()+i);
+    const letterDay = calculateDayForDate(date);
+    const dayEl = weekDaysElems[i];
+    if(dayEl) dayEl.querySelector(".day-type").textContent = letterDay;
+  });
+}
+
+updateWeekView();
+setInterval(()=>updateWeekView(), 60*1000);
