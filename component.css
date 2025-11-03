@@ -219,11 +219,16 @@ body {
   width: auto;
 }
 
+/* ===== Footer ===== */
 .site-footer {
-  text-align: center;
-  padding: 1rem 0;
   background: var(--brand-dark);
-  color: var(--brand-light);
-  font-size: 0.9rem;
-  border-top: 3px solid var(--brand-gold);
+  border-top: 4px solid var(--brand-gold);
+  color: white;
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 1rem 0;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25);
 }
