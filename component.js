@@ -12,7 +12,6 @@ const scheduleOverrides = {
   "2025-10-15": "PAUSE",
   "2025-10-16": "PAUSE",
   "2025-10-17": "PAUSE",
-  "2025-11-03": "FLEX", // example flex day
   "2025-11-26": "PAUSE",
   "2025-11-27": "PAUSE",
   "2025-11-28": "PAUSE",
