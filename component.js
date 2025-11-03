@@ -11,10 +11,11 @@ const scheduleOrder = ["A","F","D","B","G","E","C"];
 const scheduleOverrides = {
   "2025-10-15": "PAUSE",
   "2025-10-16": "PAUSE",
-  "2025-10-17": "PAUSE"
+  "2025-10-17": "PAUSE",
+  "2025-11-5": "PAUSE"
 };
 
-const startDate = new Date("2025-10-09T00:00:00");
+const startDate = new Date("2026-05-21T00:00:00");
 
 function calculateDayForDate(targetDate) {
   const dayMS = 1000 * 60 * 60 * 24;
