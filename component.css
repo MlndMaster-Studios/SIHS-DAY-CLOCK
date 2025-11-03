@@ -194,6 +194,34 @@ body {
   pointer-events: none;
 }
 
+/* ===== Footer ===== */
+.site-footer {
+  background: var(--brand-dark);
+  border-top: 4px solid var(--brand-gold);
+  color: white;
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-header);
+  font-size: 1rem;
+  font-weight: 500;
+  padding: 0.5rem 0;
+  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25);
+  z-index: 10;
+  position: relative;
+}
+
+.footer-inner {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer-title {
+  color: #e2e8f0;
+  letter-spacing: 0.3px;
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 640px) {
   .site-header {
@@ -210,7 +238,7 @@ body {
   .school-logo {
     position: static;
     margin-bottom: 0.5rem;
-    height: 50px; /* keeps it visible but smaller */
+    height: 50px;
   }
 
   .header-title {
@@ -218,18 +246,9 @@ body {
     text-align: center;
     margin: 0;
   }
-}
 
-/* ===== Footer ===== */
-.site-footer {
-  background: var(--brand-dark);
-  border-top: 4px solid var(--brand-gold);
-  color: white;
-  text-align: center;
-  font-size: 1rem;
-  font-weight: 700;
-  padding: 1rem 0;
-  position: relative;
-  z-index: 10;
-  box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25);
+  .site-footer {
+    font-size: 0.9rem;
+    padding: 0.4rem 0;
+  }
 }
