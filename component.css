@@ -11,10 +11,11 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: var(--font-body);
   background: var(--brand-light);
+  font-family: var(--font-body);
   color: #222;
   min-height: 100vh;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
 }
@@ -23,28 +24,29 @@ body {
 .site-header {
   background: var(--brand-dark);
   border-bottom: 4px solid var(--brand-gold);
+  color: white;
   width: 100%;
+  position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1rem 0;
-  position: relative;
   box-shadow: 0 2px 8px rgba(0,0,0,0.25);
   z-index: 10;
 }
 
 .header-inner {
   width: 100%;
-  max-width: 1200px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  max-width: 1100px;
   position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .school-logo {
   position: absolute;
-  left: 1.5rem; /* small breathing room from edge */
+  left: 1rem; /* flush-left but not cut off */
   top: 50%;
   transform: translateY(-50%);
   height: 60px;
@@ -52,11 +54,12 @@ body {
 }
 
 .header-title {
-  font-family: var(--font-header);
   color: #e2e8f0;
   font-size: 1.8rem;
-  font-weight: 700;
+  font-weight: 600;
   text-align: center;
+  font-family: var(--font-header);
+  letter-spacing: 0.5px;
 }
 
 /* ===== Content ===== */
@@ -205,15 +208,16 @@ body {
 .site-footer {
   background: var(--brand-dark);
   border-top: 4px solid var(--brand-gold);
+  color: white;
   width: 100%;
   text-align: center;
   font-family: var(--font-header);
   font-size: 1rem;
   font-weight: 500;
   padding: 0.5rem 0;
-  position: relative;
   box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.25);
   z-index: 10;
+  position: relative;
 }
 
 .footer-inner {
@@ -238,17 +242,30 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
   }
 
   .school-logo {
-    position: static;
+    position: relative;
+    top: 0;
+    transform: none;
+    height: 45px;
     margin-bottom: 0.5rem;
-    height: 50px;
   }
 
   .header-title {
     font-size: 1.4rem;
     text-align: center;
+    margin: 0;
+    letter-spacing: 0.3px; /* tighten spacing for mobile */
+  }
+
+  .widgets {
+    grid-template-columns: 1fr;
+  }
+
+  .week-day {
+    flex: 1 1 100%;
   }
 
   .site-footer {
